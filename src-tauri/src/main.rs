@@ -6,7 +6,7 @@
 
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use word_collector::{autostart, collector, commands, config, platform, state, tray};
+use word_collector::{autostart, collector, commands, config, state, tray};
 
 use tauri::{Manager, WindowEvent};
 use tauri_plugin_global_shortcut::{Builder as GlobalShortcutBuilder, ShortcutState};
@@ -94,7 +94,7 @@ fn main() {
                 api.prevent_close();
                 let _ = window.hide();
                 #[cfg(target_os = "macos")]
-                platform::macos::set_dock_icon_visible(false);
+                word_collector::platform::macos::set_dock_icon_visible(false);
             }
         })
         .run(tauri::generate_context!())

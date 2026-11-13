@@ -60,10 +60,15 @@ pub fn capture_with_copy_hook(
                 &backup,
                 Some(Backup::Text(prev)) if *prev == text
             );
+            if std::env::var("WORD_COLLECTOR_DIAG").is_ok() {
+                eprintln!("[diag] poll text={:?} unchanged={}", text, is_unchanged);
+            }
             if !is_unchanged {
                 new_text = Some(text);
                 break;
             }
+        } else if std::env::var("WORD_COLLECTOR_DIAG").is_ok() {
+            eprintln!("[diag] poll read failed");
         }
     }
 

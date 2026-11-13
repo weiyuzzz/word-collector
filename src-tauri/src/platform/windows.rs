@@ -44,6 +44,20 @@ pub fn simulate_copy() -> Result<(), String> {
     let c_up = key_input(VK_C, KEYEVENTF_KEYUP);
     let ctrl_up = key_input(VK_CONTROL as u16, KEYEVENTF_KEYUP);
 
+    if std::env::var("WORD_COLLECTOR_DIAG").is_ok() {
+        use winapi::um::winuser::{GetForegroundWindow, GetWindowTextW};
+        unsafe {
+            let hwnd = GetForegroundWindow();
+            let mut buf = [0u16; 256];
+            let len = GetWindowTextW(hwnd, buf.as_mut_ptr(), 256);
+            eprintln!(
+                "[diag] foreground={:p} title={:?}",
+                hwnd,
+                String::from_utf16_lossy(&buf[..len as usize])
+            );
+        }
+    }
+
     send_one(&ctrl_down)?;
     std::thread::sleep(std::time::Duration::from_millis(20));
     send_one(&c_down)?;
