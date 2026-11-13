@@ -55,20 +55,27 @@ pub fn capture_with_copy_hook(
     let mut new_text: Option<String> = None;
     for _ in 0..3 {
         std::thread::sleep(Duration::from_millis(180));
-        if let Ok(text) = clip.get_text() {
-            let is_unchanged = matches!(
-                &backup,
-                Some(Backup::Text(prev)) if *prev == text
-            );
-            if std::env::var("WORD_COLLECTOR_DIAG").is_ok() {
-                eprintln!("[diag] poll text={:?} unchanged={}", text, is_unchanged);
+        match clip.get_text() {
+            Ok(text) => {
+                let is_unchanged = matches!(
+                    &backup,
+                    Some(Backup::Text(prev)) if *prev == text
+                );
+                if std::env::var("WORD_COLLECTOR_DIAG").is_ok() {
+                    eprintln!("[diag] poll text={:?} unchanged={}", text, is_unchanged);
+                }
+                if !is_unchanged {
+                    new_text = Some(text);
+                    break;
+                }
             }
-            if !is_unchanged {
-                new_text = Some(text);
-                break;
+            Err(err) => {
+                // 剪贴板为空/内容非文本（如截图）时也会走这里；
+                // 被其他进程短暂占用则靠重试缓解。
+                if std::env::var("WORD_COLLECTOR_DIAG").is_ok() {
+                    eprintln!("[diag] poll error: {err}");
+                }
             }
-        } else if std::env::var("WORD_COLLECTOR_DIAG").is_ok() {
-            eprintln!("[diag] poll read failed");
         }
     }
 
