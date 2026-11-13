@@ -1,0 +1,207 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1f2430;
+  --text-sub: #6b7280;
+  --border: #e3e6eb;
+  --accent: #6d5cd7;
+  --accent-soft: #efeefb;
+  --ok: #16a34a;
+  --err: #dc2626;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #191b22;
+    --card: #22252e;
+    --text: #e8eaee;
+    --text-sub: #9aa1ad;
+    --border: #333844;
+    --accent: #8f83e8;
+    --accent-soft: #2c2a3d;
+    --ok: #4ade80;
+    --err: #f87171;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 -apple-system, "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  user-select: none;
+}
+
+.app { padding: 16px 18px 24px; }
+
+/* 状态栏 */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex: none;
+}
+.status-dot.paused { background: #d97706; }
+
+.status-info { flex: 1; min-width: 0; }
+.status-text { font-weight: 600; }
+.status-sub { font-size: 12px; color: var(--text-sub); }
+
+/* 权限提示 */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+  border-radius: 10px;
+  font-size: 13px;
+}
+@media (prefers-color-scheme: dark) {
+  .banner { background: #3a2f14; border-color: #6b5314; color: #fbbf24; }
+}
+.banner.hidden { display: none; }
+
+/* 卡片 */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.label {
+  width: 92px;
+  flex: none;
+  padding-top: 6px;
+  color: var(--text);
+}
+.label.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  padding-top: 2px;
+  cursor: pointer;
+}
+
+.value {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.row .value { align-items: stretch; }
+.row:has(> .label.checkbox) .label { width: auto; }
+
+.mono {
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  font-size: 12px;
+  word-break: break-all;
+  user-select: text;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+input[type="text"]:focus { border-color: var(--accent); }
+
+.hint { font-size: 12px; color: var(--text-sub); }
+
+/* 按钮 */
+.btn {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.small { padding: 4px 10px; font-size: 12px; }
+.btn.warn { background: #d97706; border-color: #d97706; }
+.btn-line { display: flex; gap: 8px; align-items: center; }
+.hidden { display: none; }
+.hint.err { color: var(--err); }
+.hint.warn { color: #b45309; }
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn.ghost:hover { background: var(--accent-soft); }
+.btn.link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  padding: 0;
+  text-decoration: underline;
+  font-size: 13px;
+}
+.btn.recording { background: var(--err); border-color: var(--err); }
+
+/* 日志 */
+.log {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 12px;
+}
+.log li {
+  padding: 4px 8px;
+  border-left: 3px solid var(--ok);
+  background: var(--bg);
+  border-radius: 4px;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+.log li.error { border-left-color: var(--err); }
+.log li.empty { border-left-color: var(--border); color: var(--text-sub); }

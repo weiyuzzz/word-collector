@@ -1,0 +1,13 @@
+{
+  "name": "word-collector",
+  "version": "0.1.0",
+  "private": true,
+  "description": "选中英文单词，按全局快捷键，直接追加到 Obsidian 指定 Markdown 文件（Tauri 2 + Rust）",
+  "scripts": {
+    "tauri": "tauri",
+    "build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

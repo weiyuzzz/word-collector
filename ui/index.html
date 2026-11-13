@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Collector 设置</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="status-bar">
+        <span class="status-dot" id="status-dot"></span>
+        <div class="status-info">
+          <div id="status-text" class="status-text">运行中</div>
+          <div id="shortcut-text" class="status-sub">快捷键加载中…</div>
+        </div>
+        <button id="btn-pause" class="btn ghost">暂停</button>
+      </header>
+
+      <div id="ax-banner" class="banner hidden">
+        <span>macOS 需要辅助功能权限才能采集选中文字。</span>
+        <button id="btn-open-ax" class="btn link">打开系统设置</button>
+      </div>
+
+      <section class="card">
+        <h2>Obsidian</h2>
+        <div class="row">
+          <span class="label">Vault 目录</span>
+          <div class="value">
+            <code id="vault-path" class="mono">未设置</code>
+            <button id="btn-choose-vault" class="btn small">选择…</button>
+          </div>
+        </div>
+        <div class="row">
+          <label class="label" for="target-file">目标文件</label>
+          <div class="value">
+            <input id="target-file" type="text" spellcheck="false" placeholder="word-collector.md" />
+            <span class="hint">Vault 内相对路径，例如 Vocabulary/words.md</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>采集</h2>
+        <div class="row">
+          <span class="label">全局快捷键</span>
+          <div class="value">
+            <div class="btn-line">
+              <button id="shortcut-rec" class="btn small">点击录制</button>
+              <button id="shortcut-force" class="btn small warn hidden">仍然保存</button>
+            </div>
+            <span class="hint" id="shortcut-hint"></span>
+          </div>
+        </div>
+        <div class="row">
+          <label class="label checkbox">
+            <input type="checkbox" id="opt-dedup" />
+            重复单词不再追加
+          </label>
+        </div>
+        <div class="row">
+          <label class="label checkbox">
+            <input type="checkbox" id="opt-notify" />
+            采集结果系统通知
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>常规</h2>
+        <div class="row">
+          <label class="label checkbox">
+            <input type="checkbox" id="opt-autostart" />
+            开机自动启动（后台运行）
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>测试</h2>
+        <div class="row">
+          <span class="label">本次已采集</span>
+          <span class="value" id="collected-count">0 个</span>
+        </div>
+        <div class="row">
+          <button id="btn-capture-now" class="btn">立即采集当前选中文本</button>
+        </div>
+        <ul id="capture-log" class="log"></ul>
+      </section>
+    </main>
+    <script src="main.js"></script>
+  </body>
+</html>

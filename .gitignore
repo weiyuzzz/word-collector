@@ -1,0 +1,15 @@
+# Rust / Tauri 构建产物
+src-tauri/target/
+src-tauri/gen/
+
+# Node
+node_modules/
+
+# 打包输出
+dist/
+
+# 本机测试残留
+.e2e-vault/
+
+# 系统文件
+.DS_Store
